@@ -1,0 +1,202 @@
+[  
+   {  
+      "id":"c9f591a2.30bb5",
+      "type":"http response",
+      "z":"9873bb37.41c4a8",
+      "name":"return page",
+      "x":1503,
+      "y":252.5,
+      "wires":[  
+
+      ]
+   },
+   {  
+      "id":"2002d2c4.a5b2ee",
+      "type":"http in",
+      "z":"9873bb37.41c4a8",
+      "name":"",
+      "url":"/analizza",
+      "method":"get",
+      "swaggerDoc":"",
+      "x":205,
+      "y":253,
+      "wires":[  
+         [  
+            "91fc65f4.50d428"
+         ]
+      ]
+   },
+   {  
+      "id":"bd702bb9.67ef48",
+      "type":"function",
+      "z":"9873bb37.41c4a8",
+      "name":"Check imput form isn't null",
+      "func":"//msg.payload= \"http://brandon.fuller.name/photos/2004/2004-01-08--Badge.jpg\";\nif (msg.req.body[\"indirizzo\"] !== \"\" && msg.req.body[\"indirizzo\"] !== null) {\n    msg.payload = msg.req.body[\"indirizzo\"];\n    }\nreturn msg;",
+      "outputs":1,
+      "noerr":0,
+      "x":460.5,
+      "y":431,
+      "wires":[  
+         [  
+            "6b9454af.ba97fc"
+         ]
+      ]
+   },
+   {  
+      "id":"91fc65f4.50d428",
+      "type":"template",
+      "z":"9873bb37.41c4a8",
+      "name":"build page html",
+      "field":"payload",
+      "fieldType":"msg",
+      "format":"handlebars",
+      "syntax":"mustache",
+      "template":"<body>\n<form method=\"post\" action=\"https://fincantieriservices.mybluemix.net/analisi\">\n    <input type=\"text\" name=\"indirizzo\">Image URL</input>\n    <button type=\"submit\">Analizza</button>\n</form>\n</body>",
+      "x":456.5,
+      "y":253,
+      "wires":[  
+         [  
+            "c9f591a2.30bb5"
+         ]
+      ]
+   },
+   {  
+      "id":"4878f558.2ad51c",
+      "type":"http in",
+      "z":"9873bb37.41c4a8",
+      "name":"",
+      "url":"/analisi",
+      "method":"post",
+      "swaggerDoc":"",
+      "x":89,
+      "y":478,
+      "wires":[  
+         [  
+            "a931524b.3e61"
+         ]
+      ]
+   },
+   {  
+      "id":"a931524b.3e61",
+      "type":"switch",
+      "z":"9873bb37.41c4a8",
+      "name":"",
+      "property":"req.body[\"indirizzo\"]",
+      "propertyType":"msg",
+      "rules":[  
+         {  
+            "t":"cont",
+            "v":"http",
+            "vt":"str"
+         },
+         {  
+            "t":"else"
+         },
+         {  
+            "t":"null"
+         },
+         {  
+            "t":"eq",
+            "v":"\"\"",
+            "vt":"jsonata"
+         }
+      ],
+      "checkall":"true",
+      "outputs":4,
+      "x":250,
+      "y":473,
+      "wires":[  
+         [  
+            "bd702bb9.67ef48"
+         ],
+         [  
+            "95101341.78887"
+         ],
+         [  
+            "95101341.78887"
+         ],
+         [  
+            "95101341.78887"
+         ]
+      ]
+   },
+   {  
+      "id":"9ecaa089.7174f",
+      "type":"http response",
+      "z":"9873bb37.41c4a8",
+      "name":"return error page",
+      "x":736.5,
+      "y":600,
+      "wires":[  
+
+      ]
+   },
+   {  
+      "id":"95101341.78887",
+      "type":"template",
+      "z":"9873bb37.41c4a8",
+      "name":"set error immage page",
+      "field":"payload",
+      "fieldType":"msg",
+      "format":"handlebars",
+      "syntax":"mustache",
+      "template":"<body>\n\n<p>URL/IMMAGINE NON VALIDA </p>\n<form method=\"\" action=\"https://fincantieriservices.mybluemix.net/analizza\">\n    <button type=\"submit\">Torna All'inserimento dell'immagine</button>\n</form>\n</body>",
+      "x":480.5,
+      "y":599,
+      "wires":[  
+         [  
+            "9ecaa089.7174f"
+         ]
+      ]
+   },
+   {  
+      "id":"7e186b0b.f13234",
+      "type":"function",
+      "z":"9873bb37.41c4a8",
+      "name":"set msg and reset indirizzo",
+      "func":"msg.payload = msg.result.images[0];\nmsg.indirizzo = null\nreturn msg;",
+      "outputs":1,
+      "noerr":0,
+      "x":973,
+      "y":430,
+      "wires":[  
+         [  
+            "c3d38c41.2b373"
+         ]
+      ]
+   },
+   {  
+      "id":"c3d38c41.2b373",
+      "type":"template",
+      "z":"9873bb37.41c4a8",
+      "name":"template page per nome",
+      "field":"payload",
+      "fieldType":"msg",
+      "format":"handlebars",
+      "syntax":"mustache",
+      "template":"<body>\n<p>This is the text of image: {{payload.text}} </p>\n\n<form method=\"\" action=\"https://fincantieriservices.mybluemix.net/analizza\">\n    <button type=\"submit\">Torna All'inserimento dell'immagine</button>\n</form>\n</body>\n",
+      "x":1252.5,
+      "y":430,
+      "wires":[  
+         [  
+            "c9f591a2.30bb5"
+         ]
+      ]
+   },
+   {  
+      "id":"6b9454af.ba97fc",
+      "type":"visual-recognition-v3",
+      "z":"9873bb37.41c4a8",
+      "name":"",
+      "apikey":"",
+      "image-feature":"recognizeText",
+      "lang":"",
+      "x":727,
+      "y":432,
+      "wires":[  
+         [  
+            "7e186b0b.f13234"
+         ]
+      ]
+   }
+]
