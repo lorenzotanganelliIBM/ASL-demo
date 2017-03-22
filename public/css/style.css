@@ -47,6 +47,10 @@ body {
 	padding:0
 }
 
+.inline{
+	display: inline-block;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 	font-family: 'Didact Gothic', sans-serif;
@@ -101,11 +105,15 @@ a {
 	transition: 0.5s ease;
 	-o-transition: 0.5s ease;
 	-webkit-transition: 0.5s ease;
+	
 }
 
 a:hover {
-	color: #334960;
+	color: #ffffff;
 	
+}
+.shadow{
+	text-shadow: 2px 2px #ff0000;
 }
 
 /*preclass*/
