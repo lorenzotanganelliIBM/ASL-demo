@@ -138,7 +138,7 @@
 					</div>
 				</div>
 				<div class="grid_12">
-					<div class="btn"><a href="/red">STARTER NODE-RED</a></div>
+					<div class="btn"><a href="/red" target="_blank">STARTER NODE-RED</a></div>
 				</div>
 			</div>
 		</div>
@@ -153,16 +153,19 @@
 							<br></br><br></br>
 							Usate il form di seguito per inserire un URL di un immagine con testo inglese, il tool ritornetrà il testo completo!!
 						</div>
-						<form id="form">
-							<div class="success_wrapper">
-							<div class="success">Contact form submitted!<br>
-							<strong>We will be in touch soon.</strong> </div></div>
-							<fieldset>
-							<label class="name">
-							Inserisci URL:
-							<input type="text" value="">
-							<br class="clear">
-							<div class="btns"><a data-type="submit" class="link1">INVIA LA FOTO</a><div class="clear"></div></div></fieldset>
+						<form id="form" action="./analisi" method="POST">
+							<div class="grid_8">
+							<label>Inserisci URL:</label>
+								<input type="text" value="" name="indirizzo" class="inputT">
+							</div>
+							<div class="grid_4">
+								<label>Tipo Riconoscimento:</label><br class="clear">
+								<input type="radio" name="gender" value="textRec" class="inputC" checked><label>Riconoscimento Testo</label><br class="clear">
+  								<input type="radio" name="gender" value="pictureRec" class="inputC"><label>Ricononscimento Immagine</label><br class="clear">
+							</div>
+							<div class="grid_12">
+								<button type="submit" class="button">INVIA LA FOTO<div class="clear"/></button>
+							</div>
 						</form>
 					</div>
 				</div>
